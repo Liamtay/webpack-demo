@@ -32,7 +32,12 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'less-loader'] // 从右向左解析原则
+        use: ['style-loader', 'css-loader' , {
+          loader: 'postcss-loader',
+          options: {
+            plugins: [require('autoprefixer')]
+          }
+        }, 'less-loader'] // 从右向左解析原则
       }
     ]
   }
