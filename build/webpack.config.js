@@ -23,7 +23,19 @@ module.exports = {
       chunks: ['header'] // 与入口文件对应的模块名
     }),
     new CleanWebpackPlugin(),
-  ]
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'] // 从右向左解析原则
+      },
+      {
+        test: /\.less$/,
+        use: ['style-loader', 'css-loader', 'less-loader'] // 从右向左解析原则
+      }
+    ]
+  }
 }
 
 
