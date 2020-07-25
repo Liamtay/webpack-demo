@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   mode: 'development', // 开发模式
   entry: {
@@ -23,16 +24,20 @@ module.exports = {
       chunks: ['header'] // 与入口文件对应的模块名
     }),
     new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "[name].[hash].css",
+      chunkFilename: "[id].css",
+    })
   ],
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'] // 从右向左解析原则
+        use: [MiniCssExtractPlugin.loader, 'css-loader'] // 从右向左解析原则
       },
       {
         test: /\.less$/,
-        use: ['style-loader', 'css-loader' , {
+        use: [MiniCssExtractPlugin.loader, 'css-loader', {
           loader: 'postcss-loader',
           options: {
             plugins: [require('autoprefixer')]
