@@ -2,6 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
+let indexLess = new ExtractTextWebpackPlugin('index.less');
+let indexCss = new ExtractTextWebpackPlugin('index.css');
+
 module.exports = {
   mode: 'development', // 开发模式
   entry: {
@@ -24,25 +28,25 @@ module.exports = {
       chunks: ['header'] // 与入口文件对应的模块名
     }),
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: "[name].[hash].css",
-      chunkFilename: "[id].css",
-    })
+    indexLess,
+    indexCss
   ],
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'] // 从右向左解析原则
+        use: indexCss.extract({ use: ['css-loader'] }) // 从右向左解析原则
       },
       {
         test: /\.less$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', {
-          loader: 'postcss-loader',
-          options: {
-            plugins: [require('autoprefixer')]
-          }
-        }, 'less-loader'] // 从右向左解析原则
+        use: indexLess.extract({
+          use: ['css-loader', {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [require('autoprefixer')]
+            }
+          }, 'less-loader']
+        }) // 从右向左解析原则
       }
     ]
   }
