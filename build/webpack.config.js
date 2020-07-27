@@ -10,7 +10,8 @@ module.exports = {
   mode: 'development', // 开发模式
   entry: {
     main: path.resolve(__dirname, '../src/main.js'),
-    header: path.resolve(__dirname, '../src/header.js')
+    header: path.resolve(__dirname, '../src/header.js'),
+    entry: ["@babel/polyfill",path.resolve(__dirname,'../src/main.js')]
   },
   output: {
     filename: '[name].[hash:8].js',      // 打包后的文件名称
@@ -98,6 +99,16 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        },
+        exclude: /node_modules/
       },
     ]
   }
