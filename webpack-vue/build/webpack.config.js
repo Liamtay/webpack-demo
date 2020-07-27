@@ -23,7 +23,7 @@ module.exports = {
             presets:['@babel/preset-env']
           }
         },
-        exclude:/node_modules/
+        //exclude:/node_modules/
       },
       {
         test:/\.vue$/,
@@ -33,8 +33,10 @@ module.exports = {
             compilerOptions:{
               preserveWhitespace:false
             }
-          }
-        }]
+          },
+        }],
+        include:[path.resolve(__dirname,'../src')],
+        exclude:/node_modules/
       },
       {
         test:/\.css$/,
@@ -78,7 +80,9 @@ module.exports = {
                 name:'img/[name].[hash:8].[ext]'
               }
             }
-          }
+          },
+           include:[path.resolve(__dirname,'../src/assets')],
+          // exclude:/node_modules/
         }
       },
       {
@@ -116,7 +120,8 @@ module.exports = {
   resolve:{
     alias:{
       'vue$':'vue/dist/vue.runtime.esm.js',
-      ' @':path.resolve(__dirname,'../src')
+      ' @':path.resolve(__dirname,'../src'),
+      'assets':path.resolve(__dirname,'../src/assets')
     },
     extensions:['*','.js','.json','.vue']
   },

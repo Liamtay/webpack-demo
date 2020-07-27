@@ -1,4 +1,3 @@
-<!--  -->
 <template>
   <div id="container">
     <h1>{{initData}}</h1>
@@ -9,7 +8,7 @@
 export default {
 data() {
 return {
-   initData:'vue开发环境运行成功'
+   initData:'vue开2发环境运行成功'
 }
 },
 //生命周期 - 创建完成（访问当前this实例）
