@@ -1,5 +1,7 @@
 const path = require('path');
+const webpack = require("webpack");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const vueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -156,7 +158,16 @@ module.exports = {
         }
       ],
       threadPool: happyThreadPool
-    })
+    }),
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('./vendor-manifest.json')
+    }),
+    // new CopyWebpackPlugin({ // 拷贝生成的文件到dist目录 这样每次不必手动去cv
+    //   patterns: [
+    //     { from: 'static', to: 'dist' },
+    //   ]
+    // }),
   ],
   optimization: {
     minimizer: [

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --config build/webpack.config.js --open",
-    "build": "webpack --config build/webpack.config.js"
+    "build": "webpack --config build/webpack.config.js",
+    "dll": "webpack --config build/webpack.dll.config.js"
   },
   "repository": {
     "type": "git",
@@ -49,6 +50,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.10.4",
+    "element-ui": "^2.13.2",
     "vue": "^2.6.11"
   }
 }
