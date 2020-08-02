@@ -159,10 +159,10 @@ module.exports = {
       ],
       threadPool: happyThreadPool
     }),
-    new webpack.DllReferencePlugin({
-      context: __dirname,
-      manifest: require('./vendor-manifest.json')
-    }),
+    // new webpack.DllReferencePlugin({
+    //   context: __dirname,
+    //   manifest: require('./vendor-manifest.json')
+    // }),
     // new CopyWebpackPlugin({ // 拷贝生成的文件到dist目录 这样每次不必手动去cv
     //   patterns: [
     //     { from: 'static', to: 'dist' },
