@@ -4,6 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const vueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const devMode = process.argv.indexOf('--mode=production') === -1;
+const HappyPack = require('happypack');
+const os = require('os');
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
+
 module.exports = {
   entry: {
     main: path.resolve(__dirname, '../src/main.js')
@@ -17,13 +21,17 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
-          }
-        },
-        exclude:/node_modules/
+        use: [
+          // {
+          //   loader: 'babel-loader',
+          //   options: {
+          //     presets: ['@babel/preset-env']
+          //   }
+          // },
+          {
+            loader: 'happypack/loader?id=happyBabel'
+          }],
+        exclude: /node_modules/
       },
       {
         test: /\.vue$/,
@@ -134,6 +142,19 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: devMode ? '[name].css' : '[name].[hash].css',
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
+    }),
+    new HappyPack({
+      id: 'happyBabel',
+      loaders: [
+        {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            cacheDirectory:true
+          }
+        }
+      ],
+      threadPool:happyThreadPool
     })
   ]
 }
